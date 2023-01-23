@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on Safa Bayar</title>
+    <link>https://safabayar.tech/tags/linux/</link>
+    <description>Recent content in linux on Safa Bayar</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://safabayar.tech/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Postfix Virtual Host Eklemek</title>
+      <link>https://safabayar.tech/virtualhostpostfix/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/virtualhostpostfix/</guid>
+      <description>Virtual Host Virtual host kavramı derste, virtual mail dizinine sahip olanlar, farklı domain adlarına sahip olanlar ve unix kullanıcısı olmayan durumu için anlatıldı. Ben de anladıklarımı ve notlarımı size aktarmaya çalışacağım.
+Büyük sistemlerde çok fazla kullanıcı bulunmaktadır ve her biri için domain adı girilmiş olmalıdır. Bundan dolayı çok fazla kaynak ve zaman gerekmektedir. Bu sorunun önüne geçmek için virtual host kavramı kullanılmaktadır.
+Virtual host kavramı ise postfix&amp;rsquo;te her alıcı adresi kendisine ait bir tane sanal mail kutusu(virtual mailbox) olmalıdır.</description>
+    </item>
+    
+    <item>
+      <title>Squid</title>
+      <link>https://safabayar.tech/squid/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/squid/</guid>
+      <description>Squid Squid, önbellekleme(cache) işlemlerini ve HTTP bağlantılarını yönlendirmenizi sağlayan bir web proxy aracıdır. Çok geniş kullanım alanı vardır. Squid ile Ağı loglayabilir, kontrol edebilir, yönetebilir ve yönlendirebilir. Ayrıca aradaki bağlantının hızını kontrol edebilirsiniz. Önbellek ile ilgili bilgi almak için linki takip edebilirsiniz.
+Squid, SSL,TLS ve HTTPS protokollerini kullanabilmektedir fakat Privoxy&amp;rsquo;nin aksine SOCKS protokolünü desteklememektedir. Squid varsayılan olarak 3128 portunu kullanmaktadır, servis ayar dosyası içerisinden değiştirerek farklı portu kullanabilirsiniz.
+Kurulum Centos 7 üzerinde kurulum yapmıştık ve bu kurulum sunucu tarafında yapılmalıdır.</description>
+    </item>
+    
+    <item>
+      <title>Virtualization</title>
+      <link>https://safabayar.tech/virtualization/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/virtualization/</guid>
+      <description>Virtualization (Sanallaştırma) Mesutcan Kurt hocamızın anlattığı sanallaştırma konusunu aklımda kalanlarla ve tuttuğum notlarla aktarmaya çalışacağım.
+ Derste centos veya debian dağıtımı sanal makine istenmektedir. Sınıfta genel olarak debian dağıtımı tercih edildiği için konu debian üzerinden anlatılmıştır. Anlatımda ki hataları düzeltmek için: gitlab  Sanallaştırma, fiziksel bir makinadan sanal kaynakların ayrılıp verimli halde kullanmasını sağlamaktadır. Sanallaştırma bilgisayar donanımları, depolama cihazları ve bilgisayar ağları üzerinde yapılabilmektedir. Derste anlatılanlar disk, ağ ve donanım sanallaştırma olduğu için sadece bu konulardan bahsedeceğim.</description>
+    </item>
+    
+    <item>
+      <title>Apache</title>
+      <link>https://safabayar.tech/apache/</link>
+      <pubDate>Sun, 08 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/apache/</guid>
+      <description>APACHE In the last days of the course, I will try to convey the web topic told by our climax teacher.
+Doruk Hodja explained the subject on the slide. He then gave us some tasks and asked us to do them. I plan to tell what I have left in my mind from my own notes and teacher. If you see anything wrong, please do not forget to report it.</description>
+    </item>
+    
+    <item>
+      <title>Comparison of Wine Production by Country</title>
+      <link>https://safabayar.tech/readme/</link>
+      <pubDate>Sun, 08 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/readme/</guid>
+      <description>Comparison of wine production by country I wrote some missing information on the comment line. Link to the script I wrote: RSCRIPT
+The pdf file I prepared to present the homework: odt file
+K Proximity Cluster (K ​​Means Clustering) I will calculate the K proximity set. The data set I use is based on wine tastings in the world, and the wine scoring, which vineyard is harvested, which country it is processed in, the pricing and definition in the countries sold.</description>
+    </item>
+    
+    <item>
+      <title>Postgresql Ident Authentication Failed</title>
+      <link>https://safabayar.tech/postgresql-localhost/</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/postgresql-localhost/</guid>
+      <description>System: GNU/Linux
+Distribution: Centos 7
+Process: Install redmine
+I had installing redmine. Redmine want access postgresql database. I applied this command :
+RAILS_ENV=production bundle exec rake db:migrate but it&amp;rsquo;s give a error:
+FATAL: Ident authentication failed for user &amp;quot;&amp;lt;database-name&amp;gt;&amp;quot; I checked /var/lib/pgsql/11/data/pg_hba.conf, i corrected these lines:
+# &amp;quot;local&amp;quot; is for Unix domain socket connections only local all all trust # IPv4 local connections: host all all 127.0.0.1/32 trust but it give same error thereafter i search.</description>
+    </item>
+    
+    <item>
+      <title>Prune Parameter in Find Command</title>
+      <link>https://safabayar.tech/find-prune/</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/find-prune/</guid>
+      <description>PRUNE Find command is typically used to search for a directory or file but i want to search except a directory. This solve different ways with find command but i did this way. I&amp;rsquo;ll tell prune parameter.
+# find / -path /run/media -prune -print -o -print You are know the structure of the find command.
+ / : Root directory. -path : I want search outside directory. This place want directory name.</description>
+    </item>
+    
+    <item>
+      <title>Replacement Algoritmasi</title>
+      <link>https://safabayar.tech/replacement-algorithm/</link>
+      <pubDate>Thu, 05 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/replacement-algorithm/</guid>
+      <description>Replacement Algoritması: Cache algoritmaları komutların veya algoritmaların optimize edilmesi, cache algoritmaları ile verilerin saklanması işleminin verimli olmasını sağlamak için kullanılır. Cache’in temiz tutulmasının önemi verilerin daha verimli bir şekilde saklanması ve bu sayede çalışma zamanı süresini kısaltması amaçlanmaktadır.
+Replacement algoritmaları yalnızca associative ve set associative ihtiyaçları vardır.
+1-) Least Recently Used (LRU): Az sıklıkla kullanılan cache bellekteki verinin sıralanıp en az olanın çıkarılmasıdır. Peki bir veri bloğunun az kullanıldığının nasıl bilmektedir.</description>
+    </item>
+    
+  </channel>
+</rss>

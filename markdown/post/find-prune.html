@@ -1,0 +1,50 @@
+<hr>
+<p>date: &ldquo;209-12-05&rdquo;</p>
+<p>draft: false</p>
+<p>lastmod: &ldquo;2019-12-05&rdquo;</p>
+<p>publishdate: &ldquo;2019-12-05&rdquo;</p>
+<p>tags:</p>
+<ul>
+<li>linux</li>
+</ul>
+<ul>
+<li>find</li>
+</ul>
+<ul>
+<li>prune</li>
+</ul>
+<p>title: Prune Parameter in Find Command</p>
+<hr>
+<h1>PRUNE</h1>
+<p>Find command is typically used to search for a directory or file but i want to search except a directory. This solve different ways with find command but i did this way. I&rsquo;ll tell prune parameter.</p>
+<p>&rdquo;`</p>
+<h1>find / -path /run/media -prune -print -o -print</h1>
+<p>&rdquo;`</p>
+<p>You are know the structure of the find command.</p>
+<ul>
+<li>/ : Root directory.</li>
+</ul>
+<ul>
+<li>-path : I want search  outside directory. This place want directory name.</li>
+</ul>
+<ul>
+<li>-prune : Prune parameter should make search outside previous directory name. we have already purposed it.</li>
+</ul>
+<ul>
+<li>-print : Display search result</li>
+</ul>
+<ul>
+<li>-o : It&rsquo;s &lsquo;or&rsquo;, logical expression. Man page say:  </li>
+</ul>
+<pre><code>    ``` 
+</code></pre>
+<pre><code>	expr1 -o expr2
+</code></pre>
+<pre><code>         	Or; expr2 is not evaluated if expr1 is true.
+</code></pre>
+<pre><code>    ```
+</code></pre>
+<p>If you want search a file or directory name, you must use grep command. Grep command  search a word and you are may use regex. I used this type:</p>
+<p>&rdquo;`</p>
+<h1>find / -path /run/media -prune -print -o -print  | grep -i &lsquo;meminfo&rsquo;</h1>
+<p>&rdquo;`</p>

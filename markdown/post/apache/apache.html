@@ -1,0 +1,238 @@
+<hr>
+<p>date: &ldquo;209-12-08&rdquo;</p>
+<p>draft: false</p>
+<p>lastmod: &ldquo;2019-12-08&rdquo;</p>
+<p>publishdate: &ldquo;2019-12-08&rdquo;</p>
+<p>tags:</p>
+<ul>
+<li>linux</li>
+</ul>
+<ul>
+<li>System-Management-2</li>
+</ul>
+<ul>
+<li>OYK2018</li>
+</ul>
+<ul>
+<li>web-server</li>
+</ul>
+<p>title: Apache</p>
+<hr>
+<h1>APACHE</h1>
+<p>In the last days of the course, I will try to convey the web topic told by our climax teacher.</p>
+<p>Doruk Hodja explained the subject on the slide. He then gave us some tasks and asked us to do them. I plan to tell what I have left in my mind from my own notes and teacher. If you see anything wrong, please do not forget to report it.</p>
+<ul>
+<li>One centos minimal virtual machine is required in the course.</li>
+</ul>
+<ul>
+<li>To change the errors in the narration: <a href="https://gitlab.com/rection/lyk18-SistemYonetim-2-duzey.git">Gitlab</a></li>
+</ul>
+<ul>
+<li>For the slide used in the lesson: <a href="http://topluluk.ozguryazilim.com.tr/wp-content/sunumlar/sistemyonetim-sunumlar/apache_web_sunücü.html#1">Slide</a></li>
+</ul>
+<h2>Web Architecture</h2>
+<p>{{<figure src = "images / apache / 0.png" title = "image title">}}</p>
+<p>Clients in the photo are web browsers. Web browsers are an interface to access a page published on the Internet. If we give examples of these, such as firefoxi chrome, safari are vehicles. When you search for any address from the browser, you go to the server where the address is located via networks. The server must also be a web server to request a page from the server.</p>
+<p>The web server is to check whether the page is requested and give the page. If the page was not found, the error code is returned. If the page is found, if there is a different operation requested (registration, data processing &hellip;), it is directed to the application server. The application server is the mechanism that directs and controls the incoming request to perform the operations in it. Examples of the application server are tools such as zend (php), J2EE (java). If the database is used in the system, the application server sends and processes requests to the database. Communication between database and application server is done with http protocol.</p>
+<p>HTTP: Hyper Text Transfer Protocol, port 80 is used.</p>
+<p>HTTPS: HTTP Secure, port 443 is used.</p>
+<p>URL: The part of the location of a web server that is read by people.</p>
+<p>According to the number given by Netcraft (September 2018) web server shares:</p>
+<p><img src="https://raw.githubusercontent.com/rection/LYK18-GNULinuxSistemYonetim-Duzey2/resimduzenleme/upgrade/katkida-bulunanlar/safa-bayar/apache/images/1.png" alt="Alt Img" /></p>
+<p>According to the number provided by StatCounter (August 2018) client shares:</p>
+<p><img src="https://raw.githubusercontent.com/rection/LYK18-GNULinuxSistemYonetim-Duzey2/resimduzenleme/upgrade/katkida-bulunanlar/safa-bayar/apache/images/2.png" alt="Alt Img" /></p>
+<h3>Apache History</h3>
+<p>1991 - HTTP&rsquo;s 0.9 was announced.</p>
+<p>1994 - NCSA HTTPd development stopped.</p>
+<p>1995 - &ldquo;A Patchy Server&rdquo; based on NCSA.</p>
+<p>1996 - It was named Apache in time and became the most popular server in the world.</p>
+<p>1999 - Apache Software Foundation was established.</p>
+<p>2018 - Apache is the world&rsquo;s most popular server with 350+ Apache projects.</p>
+<h3>Apache Setup</h3>
+<p>Installing Apache is quite simple. It is explained through the distribution of Centos 7. In Debian distributions, the location of commands and configuration files change.</p>
+<blockquote>
+<p><code># yum install httpd</code></p>
+</blockquote>
+<p>It downloads and installs the httpd package.</p>
+<blockquote>
+<p><code># service httpd start</code></p>
+</blockquote>
+<p>We run the service after installation.</p>
+<blockquote>
+<p><code># # chkconfig httpd on</code></p>
+</blockquote>
+<p>We apply this command to avoid rebooting at every boot.</p>
+<blockquote>
+<p><code># sudo service firewalld start</code></p>
+</blockquote>
+<p>We start the firewalld service to allow external connection.</p>
+<blockquote>
+<p><code># sudo firewall-cmd --permanent --add-port = 80 / tcp</code></p>
+</blockquote>
+<p>We open 80th port for tcp protocol via firewall.</p>
+<p>The settings files are as follows;</p>
+<p><code>&gt; /etc/httpd/conf/httpd.conf</code></p>
+<p><code>&gt; /etc/httpd/conf.d / *. conf</code></p>
+<p>&rdquo;&gt; / etc / sysconfig / httpd &ldquo;</p>
+<h3>Working Models</h3>
+<p>MPM (Multi-Processing Modules): Used to change the basic functions of the web server. This is thanks to the modular design of apache. It is used in all http operations. There are three selection stages to use these stages. These are Prefork, Worker and Event.</p>
+<blockquote>
+<p>** Prefork (default): ** Apache starts with sub processes when it is first run. These are the services that work to meet the default requests. Prefork allows this to be checked.</p>
+</blockquote>
+<blockquote>
+<p>** Worker (Threaded): ** Each subprocess creates new queues when there is a connection. A different subprocess is created when the difference from Prefork is the link here.</p>
+</blockquote>
+<blockquote>
+<p>** Event (Threaded - Apache 2.4 +): ** Allows more requests to be served at the same time than other processes. Here, the client can keep the connection open after completing the first request. In this way, it can send more requests using the same socket and reduce the overload of the connection.</p>
+</blockquote>
+<p>By default, Nginx is a Worker (Threaded) running service. Apache runs prefork by default. We can pass both web servers to one of the stages described.</p>
+<h3>Modular Structure:</h3>
+<p>Many additional functions are added to the httpd core. Httpd core enables to manage the modular structure. The best feature of Apache is that it is in module format. Because the modules must be read each time, the less modules are added, the more they work. The modules can be loaded dynamically as well as embedded statically. Static is considered to be an advantage, but when any changes are made, it needs to be recompiled. This causes the system to slow down.</p>
+<p>** <code># # http -l</code> ** command is used to see the static compiled modules.</p>
+<p>Adding / Removing Modules:</p>
+<p>There is <code>LoadModule auth_basic_module modules / mod_auth_basic.so</code> in line 51 in /etc/httpd/conf/httpd.conf. &lsquo;modules&rsquo; specifies the / etc / httpd / Modules directory. The module you want to add must be put in the modules directory.</p>
+<p>Some of Apache&rsquo;s own modules are:</p>
+<ul>
+<li>mod_dav: With HTTP protocol, remote server enables operations such as creating, moving and deleting resources.</li>
+</ul>
+<ul>
+<li>mod_deflate: It provides compression on the server side.</li>
+</ul>
+<ul>
+<li>mod_ldap: It is the module used to improve the performance of the LDAP service running at the back.</li>
+</ul>
+<p>Some of Apache&rsquo;s common additional modules are:</p>
+<ul>
+<li>mod_pagespeed: Automatically provides web optimization.</li>
+</ul>
+<ul>
+<li>mod_security: It has a firewall system for itself. It can also be used for vulnerabilities such as sql injection.</li>
+</ul>
+<ul>
+<li>mod_wsgi: Used in the settings and presentation of the application written in Python language.</li>
+</ul>
+<h2>Basic Settings:</h2>
+<p>The /etc/httpd/conf/httpd.conf file has the ** ServerRoot ** setting on line 30. Indicates where the configuration files are located.</p>
+<p>In the /etc/httpd/conf/httpd.conf file, there is a ** DocumentRoot ** setting on line 109. Specifies the location of the file to be presented. It is usually / var / www / html.</p>
+<p>In the /etc/httpd/conf/httpd.conf file, there is a ** ServerName ** setting on line 88. This is where the private hostname and port number are entered. There is no obligation to be a hostname. There may also be an address registered on the domain name service, such as www.exapmle.com.</p>
+<p>In the /etc/httpd/conf/httpd.conf file, there is a ** Listen ** setting on line 40. It specifies which ip address and port to serve. supports ipv6.</p>
+<p>** ServerAlias ​​**, which is used when defining Virtualhost, is to define more than one domain name.</p>
+<h2>Directory Specific Settings:</h2>
+<p>First, I will talk about the use of single directories.</p>
+<blockquote>
+<p><code>&lt;Directory /&gt;</code> &ldquo;</p>
+</blockquote>
+<blockquote>
+<p>&rdquo; Options FollowSymLinks &ldquo;</p>
+</blockquote>
+<blockquote>
+<p><code>AllowOverride None</code> &ldquo;</p>
+</blockquote>
+<blockquote>
+<p><code>&lt;/ Directory&gt;</code>`</p>
+</blockquote>
+<p>** Options FollowSymLinks: ** It comes by default. It means that the server follows symbolic links in the directory. For more information <a href="https://httpd.apache.org/docs/2.4/mod/core.html#Options%20Directive">click</a>.</p>
+<p>** AllowOverride None: ** Refers to refusing to read files in the directory system. It is important for *** .htaccess *** files. Other methods that can be applied are authentication (AuthConfig), File information (FileInfo) &hellip; [click] for details (<a href="https://httpd.apache.org/docs/2.4/mod/core.html#allowoverride">https://httpd.apache.org/docs/2.4/mod/core.html#allowoverride</a>).</p>
+<p>Multiple directories must also be set as follows for use.</p>
+<blockquote>
+<p><code>&lt;DirectoryMatch / [a-d]. *&gt;</code></p>
+</blockquote>
+<blockquote>
+<p>&rdquo; Options -FollowSymLinks &ldquo;</p>
+</blockquote>
+<blockquote>
+<p><code>AllowOverride All</code></p>
+</blockquote>
+<blockquote>
+<p><code>&lt;/ DirectoryMatch&gt;</code>`</p>
+</blockquote>
+<p>It means to apply these rules for the letters between a and d that are intended to be explained in the &lsquo;/uthentica-d&hellip;*&rsquo; section defined in DirectoryMatch, and for subsequent directory mappings.</p>
+<p>** - &ldquo; option in Options -FollowSymLinks ** means that this feature is turned off. + Comes by default.</p>
+<p>** AllowOverride All ** indicates that it allows reading files.</p>
+<p>Similarly, there are *** file, url, proxy and virtualhost *** specific settings. There are some important settings.</p>
+<p>** Order allow, deny: ** *** Indicates *** Reject rules *** are processed before the allow rules ***. If the client does not match *** Permission rules *** or if there is a matching *** Deny rule *** then the client will deny access.</p>
+<p>** Order deny, allow: ** *** Specifies that *** allow rules *** will be processed before Deny rules ***. If the client does not match the *** Deny rule ***, or if there is a matching *** Permission rule ***, the client will allow access.</p>
+<p>It is obligatory to write Deny and Allow lines under this line. For more information <a href="http://www.maxi-pedia.com/Order+allow+deny">click</a>.</p>
+<h2>DirectoryIndex</h2>
+<p>It also enables access to directories and error codes to be adjusted accordingly. If the defined file does not match, the Indexes property is examined. If there is an Indexes authorization, the file list is displayed. Returns &ldquo;403 Forbidden&rdquo; if Indexes is not authorized.</p>
+<p>** ServerTokens: ** Information that is carried at the beginning of the server at the beginning of the response returned by the server. It shows the information given according to the version of Apache and Operating system. For more information <a href="https://httpd.apache.org/docs/2.4/mod/core.html#servertokens">click</a>.</p>
+<p>** StartServers 10: ** By default, open 10 processes and wait for the request to arrive. [Click] for more information (<a href="https://httpd.apache.org/docs/2.4/mod/mpm_common.html#startservers">https://httpd.apache.org/docs/2.4/mod/mpm_common.html#startservers</a>).</p>
+<p>** MinSpareServers 5: ** Determines the minimum number of idle subprocesses. The idle process is a process that does not provide a service at the moment. If MinSpareServers has fewer idle processes than the number of processes, the main process will create new child processes to complete the number. [Click] to learn more (<a href="https://httpd.apache.org/docs/2.4/en/mod/prefork.html">https://httpd.apache.org/docs/2.4/en/mod/prefork.html</a>).</p>
+<p>** MaxSpareServers 20: ** Determines the maximum number of idle subprocesses. The idle process is a process that does not provide a service at the moment. If MaxSpareServers has more than one idle process, the main process will kill those surpluses. [Click] to learn more (<a href="https://httpd.apache.org/docs/2.4/en/mod/prefork.html">https://httpd.apache.org/docs/2.4/en/mod/prefork.html</a>).</p>
+<p>** MaxRequestsPerChild 4000: ** Specifies how many transactions will kill the transaction. [Click] for more information (<a href="https://httpd.apache.org/docs/2.4/mod/mpm_common.html#MaxRequestsPerChild">https://httpd.apache.org/docs/2.4/mod/mpm_common.html#MaxRequestsPerChild</a>).</p>
+<p>** MaxClients 150: ** It can be adjusted according to the maximum amount of clients according to the amount of ram. [Click] for more information (<a href="https://2bits.com/articles/tuning-the-apache-maxclients-parameter.html">https://2bits.com/articles/tuning-the-apache-maxclients-parameter.html</a>).</p>
+<p>** ServerLimit 256: ** Determines the maximum amount of ram Apache processes can spend. It should be adjusted proportionally with MaxRequestWorkers. [Click] to learn more (<a href="https://httpd.apache.org/docs/current/en/mod/mpm_common.html">https://httpd.apache.org/docs/current/en/mod/mpm_common.html</a>).</p>
+<p>** KeepAlive On: ** Allows to receive requests in a row. [Click] for more information (<a href="https://httpd.apache.org/docs/2.4/mod/core.html#KeepAlive">https://httpd.apache.org/docs/2.4/mod/core.html#KeepAlive</a>).</p>
+<p>** KeepAliveTimeout 15: ** Specifies how many seconds to wait for the next request before the server closes a permanent connection. The speed of the users must be checked and adjusted. [Click] to learn more (<a href="https://httpd.apache.org/docs/2.4/en/mod/core.html">https://httpd.apache.org/docs/2.4/en/mod/core.html</a>).</p>
+<p>** MaxKeepAliveRequests 4000: ** Limits the number of requests allowed per connection. To keep server performance high, it should be a high value. For more information <a href="https://httpd.apache.org/docs/2.4/mod/core.html#maxkeepaliverequests">click</a>.</p>
+<h2>.htaccess</h2>
+<p>.htaccesss is a tool that allows you to make directory-specific settings where the data to be presented is located. The .htaccess file should be used when the host server configuration file cannot be accessed or changed. It is also used to redirect from old site to new site or from old pages to new pages.</p>
+<p>The AccessFileName setting must be enabled in + httpd.conf.</p>
+<blockquote>
+<p>AccessFileName .htaccess</p>
+</blockquote>
+<ul>
+<li>Settings made in httpd.conf change based on directory.</li>
+</ul>
+<ul>
+<li>Apache first looks for the .htaccess file in each directory.</li>
+</ul>
+<p>These settings apply to the + O and below directories.</p>
+<h4>Advantages:</h4>
+<p>It does not require authorization to edit + httpd.conf.</p>
+<ul>
+<li>Settings take effect immediately.</li>
+</ul>
+<ul>
+<li>Settings are also moved when moving the directory.</li>
+</ul>
+<h4>Disadvantages:</h4>
+<ul>
+<li>Lowers performance. When a document is requested, it should look up to the root directory of each directory and it reads the first .htaccess file again at the stage of changing each directory. This causes it to slow down.</li>
+</ul>
+<ul>
+<li>Reduces security. Incorrect configuration of the directives in their files, and documents in the directory and subdirectories can also cause problems.</li>
+</ul>
+<h4>Alias</h4>
+<p>It makes it possible to store the directory where the files will be presented in a different place. It provides mapping of url path and directory path.</p>
+<h4>Redirect</h4>
+<p>Used to redirect an old url. It is a method used to force https. While regex cannot be used in Redirect, it can be used with * RedirectMatch *.</p>
+<blockquote>
+<p><code>Redirect 301 / old_place.html http: // www.ozguryazilim.com.tr / new_place.php</code> &ldquo;</p>
+</blockquote>
+<blockquote>
+<p><code>RedirectMatch ^ / images /(.*)$ http: // images.ozguryazilim.com.tr / $ 1</code> &ldquo;</p>
+</blockquote>
+<ul>
+<li>Our teacher explained the rewrite topic on the slide. Anyway, the slide is sufficiently illustrative about this topic. *</li>
+</ul>
+<h2>Encryption with SSL:</h2>
+<p>Its expansion is Secure Sockets Layer. Its purpose is to establish a secure connection between a website and the visitor&rsquo;s browser. In other words, it is to verify that the other party is the place we want to reach. For SSL domain name. Not for the server. [Click] to learn more (<a href="http://www.networksolutions.com/education/what-is-an-ssl-certificate/">http://www.networksolutions.com/education/what-is-an-ssl-certificate/</a>).</p>
+<p>We are not talking about the SSL setup phase because it is one of the tasks given in the last part of the lesson.</p>
+<p>If the file is to be uploaded, it is first downloaded under / tmp / directory. It is then transferred. Their definition is used in php provisioning.</p>
+<h2>Proxy:</h2>
+<p>With a simple definition, users are intermediate servers during internet access. It can only be adjusted via the browser. In a connection, your request is first opened to the proxy server and then to the internet. Its purpose is to enter banned sites, but it is not like vpn. The connection between you and the proxy server is not encrypted and the proxy server may not support https. It has two types.</p>
+<p><img src="https://raw.githubusercontent.com/rection/lyk18-gnulinuxsistemyonetimi-duzey2/resimduzenleme/upgrade/katkida-bulunanlar/safa-bayar/apache/images/3.png" alt="Proxy" /></p>
+<h4>Forward Proxy (Redirected proxy):</h4>
+<p>The subject discussed above is forward proxy.</p>
+<h4>Reverse Proxy:</h4>
+<p>It is the reverse of the forward proxy. It meets the requests received by the client and directs it to the server located behind.</p>
+<p>The difference between the two is: While the forward proxy hides the client&rsquo;s identity, Reverse allows the proxy server to hide its identity.</p>
+<p>With the reverse proxy, we can remove the SSL load on the server side. In this way, the load of the server is reduced. To debug and capture, server side http should be used.</p>
+<h2>Apache Logs</h2>
+<p>By default, log records are kept under / var / log / httpd /. It is possible to keep it under the name of the client upon request. Logs must be compressed and signed at the end of the day. Logs must be kept for 2 years in order to avoid any problem in the face of any legal situation. In case of not keeping the logs, the culprit is the person who should keep a record. For detailed information <a href="http://www.mevzuat.gov.tr/MevzuatMetin/1.5.5651.pdf">click</a>.</p>
+<p>Some tools were mentioned to analyze the logs. Of these, piwik is used the most.</p>
+<p>Homework given by #### Doruk Hoca:</p>
+<ol>
+<li>SSL</li>
+</ol>
+<p>2-) It is requested to refer to Reverse Proxy &mdash;&ndash;&gt; hürriyet.com.tr.</p>
+<p>3-) Virtualhost &mdash;&mdash;-&gt; test1.linux.gen.tr</p>
+<pre><code>           |
+</code></pre>
+<pre><code>           -------&gt; is test2.linux.gen.t
+</code></pre>
+<p>4-) It is requested to create a password area.</p>
+<p>5-) PHP-fpm setup &mdash;&ndash;&gt; reverse proxy &mdash;-&gt; phpinfo ()</p>
+<p>6-) IP setup</p>
+<p>The results of the homework will be announced in the following days. <strong><em>The under construction</em></strong></p>

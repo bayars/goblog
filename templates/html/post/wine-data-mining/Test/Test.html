@@ -1,0 +1,65 @@
+<h1>K Çaprazlama Yöntemiyle Performans Değerlendirme Yöntemi:</h1>
+<p>Test aşamasında farklılık olarak wine veri seti üzerinden 3000 satırlık bir veri seti oluşturup kullandım. Nedeni ram yetersizliği VPS sunucu kiralayıp 20 GB&rsquo;lık swap alanı atayıp yaptım. Fakat işlem uzun sürdüğü için bir süre sonra ram ayrılamadı hatası vermektedir.</p>
+<p><img src="./Rplot01.png" alt="Clustering" /></p>
+<p>1.sınıf şarap için doğruluk tablosu:</p>
+<p>&rdquo;`</p>
+<p>l = df<span class="math inline">\(points &gt;= 0 &amp; df\)</span>price &gt;5</p>
+<p>summary(l) # puanlandırma 0&rsquo;dan büyük ve fiyatlandırma 5&rsquo;ten büyük olacaklardır.</p>
+<p>summary(l)</p>
+<p>V1</p>
+<p>Mode :logical</p>
+<p>FALSE:2982</p>
+<p>TRUE :18</p>
+<p>&rdquo;`</p>
+<p>Toplam 3 bin tane rastgele satıdan birinci kalite şaraplaın satır sayılarını buldu.</p>
+<p>&rdquo;`</p>
+<p>summary(asil)</p>
+<p>&rdquo;`</p>
+<p>Sonucu minimum 80 maximum 100 puanlandırma açısından miktarıdır.</p>
+<p>Fiyat açısından minimum 4.00 maximum 2300.00 sayılarıdır.</p>
+<p>&rdquo;`</p>
+<p>parca &lt;- <sup>20</sup>&frasl;<sub>3</sub>                                                 # Fiyatlandırmayı tablonun birinci kısmını parçalıyoruz.</p>
+<p>firstpiece &lt;- 100-parca</p>
+<p>secondpiece &lt;- firstpiece - parca</p>
+<p>thirdpiece &lt;- secondpiece - parca</p>
+<p>l1 &lt;- asil<span class="math inline">\(points &lt; firstpiece &amp; asil\)</span>points &gt; secondpiece    # Birinci kaite şarapların tabloda bulunduğu yeri işaret eder.</p>
+<p>summary(l1)                                                   # Tabloda bulunan kısımların özeti yani bulunan eşleşmeyi aktarmaktadır.</p>
+<p>Mode   FALSE    TRUE</p>
+<p>logical   57624   93306</p>
+<p>&rdquo;`</p>
+<p>&rdquo;`</p>
+<blockquote>
+<p><sup>57624</sup>&frasl;<sub>93306</sub>       # 150 bin satırın bulunduğu veri setinden alınan doğru yanlış sayısı.</p>
+</blockquote>
+<p>[1] 0.6175809       # Bütün veri setinin, 1. sınıf şarap kısmının testi.</p>
+<blockquote>
+<p><sup>2982</sup>&frasl;<sub>18</sub></p>
+</blockquote>
+<p>[1] 165.6667</p>
+<blockquote>
+<p><sup>18</sup>&frasl;<sub>2982</sub></p>
+</blockquote>
+<p>[1] 0.006036217     # Parçalanmış 3000 satırlık  veri setinin, 1. sınıf doğruluk oranı</p>
+<p>&rdquo;`</p>
+<p>Dogruluk orani <strong>0.6175809 / 0.006036217</strong></p>
+<p>&rdquo;`</p>
+<p>FirstClassWineAccuracyRatio &lt;- 0.006036217/0.6175809</p>
+<p>FirstClassWineAccuracyRatio</p>
+<p>[1] 0.00977397</p>
+<p>&rdquo;`</p>
+<p>Buradan anlaşılan k yakınlık kümesinde 0.00977397 bir hata ile buldu. Tablo oluşturulur isek;</p>
+<p>TP =  0.6175809</p>
+<p>TN = 0.006036217</p>
+<p>FP = 1-0.6175809 = 0.3824191</p>
+<p>FN = 1-0.006036217 = 0.9939638</p>
+<p>|        |         | Pozitif   | Negatif     | Toplam   |</p>
+<table>
+<tbody>
+</tbody>
+</table>
+<p>|        | Pozitif | 0.6175809 | 0.006036217 | tpozitif |</p>
+<p>| Tahmin | Negatif | 0.3824191 | 0.9939638   | tnegatif |</p>
+<p>|        | Toplam  | gpozitif  | gnegatif    | m        |</p>
+<p>Sonrasında 2. sınıf ve 3.sınıf kümelemelerine de bakılmalıdır. Önceki yapılan işlem sadece 1.sınıf kalitede ki şarapların doğruluk tablosunu göstermektedir. Önceki işlemler de 0.00977397 yakın değer bulunmaktadır.</p>
+<p>df<span class="math inline">\(points &gt; 0 &amp; df\)</span>price &lt; 5 <em>için</em> asil<span class="math inline">\(points &lt; secondpiece &amp; asil\)</span>points &gt; firstpiece</p>
+<p>df<span class="math inline">\(points &lt; 0 &amp; df\)</span>price &lt; 5 <em>için</em> asil<span class="math inline">\(points &lt; secondpiece &amp; asil\)</span>points &gt; thirdpiece</p>

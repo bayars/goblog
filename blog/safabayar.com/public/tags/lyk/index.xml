@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LYK on Safa Bayar</title>
+    <link>https://safabayar.tech/tags/lyk/</link>
+    <description>Recent content in LYK on Safa Bayar</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://safabayar.tech/tags/lyk/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Postfix Virtual Host Eklemek</title>
+      <link>https://safabayar.tech/virtualhostpostfix/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/virtualhostpostfix/</guid>
+      <description>Virtual Host Virtual host kavramı derste, virtual mail dizinine sahip olanlar, farklı domain adlarına sahip olanlar ve unix kullanıcısı olmayan durumu için anlatıldı. Ben de anladıklarımı ve notlarımı size aktarmaya çalışacağım.
+Büyük sistemlerde çok fazla kullanıcı bulunmaktadır ve her biri için domain adı girilmiş olmalıdır. Bundan dolayı çok fazla kaynak ve zaman gerekmektedir. Bu sorunun önüne geçmek için virtual host kavramı kullanılmaktadır.
+Virtual host kavramı ise postfix&amp;rsquo;te her alıcı adresi kendisine ait bir tane sanal mail kutusu(virtual mailbox) olmalıdır.</description>
+    </item>
+    
+    <item>
+      <title>Squid</title>
+      <link>https://safabayar.tech/squid/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/squid/</guid>
+      <description>Squid Squid, önbellekleme(cache) işlemlerini ve HTTP bağlantılarını yönlendirmenizi sağlayan bir web proxy aracıdır. Çok geniş kullanım alanı vardır. Squid ile Ağı loglayabilir, kontrol edebilir, yönetebilir ve yönlendirebilir. Ayrıca aradaki bağlantının hızını kontrol edebilirsiniz. Önbellek ile ilgili bilgi almak için linki takip edebilirsiniz.
+Squid, SSL,TLS ve HTTPS protokollerini kullanabilmektedir fakat Privoxy&amp;rsquo;nin aksine SOCKS protokolünü desteklememektedir. Squid varsayılan olarak 3128 portunu kullanmaktadır, servis ayar dosyası içerisinden değiştirerek farklı portu kullanabilirsiniz.
+Kurulum Centos 7 üzerinde kurulum yapmıştık ve bu kurulum sunucu tarafında yapılmalıdır.</description>
+    </item>
+    
+    <item>
+      <title>Virtualization</title>
+      <link>https://safabayar.tech/virtualization/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/virtualization/</guid>
+      <description>Virtualization (Sanallaştırma) Mesutcan Kurt hocamızın anlattığı sanallaştırma konusunu aklımda kalanlarla ve tuttuğum notlarla aktarmaya çalışacağım.
+ Derste centos veya debian dağıtımı sanal makine istenmektedir. Sınıfta genel olarak debian dağıtımı tercih edildiği için konu debian üzerinden anlatılmıştır. Anlatımda ki hataları düzeltmek için: gitlab  Sanallaştırma, fiziksel bir makinadan sanal kaynakların ayrılıp verimli halde kullanmasını sağlamaktadır. Sanallaştırma bilgisayar donanımları, depolama cihazları ve bilgisayar ağları üzerinde yapılabilmektedir. Derste anlatılanlar disk, ağ ve donanım sanallaştırma olduğu için sadece bu konulardan bahsedeceğim.</description>
+    </item>
+    
+  </channel>
+</rss>

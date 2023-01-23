@@ -1,0 +1,44 @@
+<hr>
+<p>date: &ldquo;209-12-05&rdquo;</p>
+<p>draft: false</p>
+<p>lastmod: &ldquo;2019-12-05&rdquo;</p>
+<p>publishdate: &ldquo;2019-12-05&rdquo;</p>
+<p>tags:</p>
+<ul>
+<li>linux</li>
+</ul>
+<ul>
+<li>postgresql</li>
+</ul>
+<ul>
+<li>postgres</li>
+</ul>
+<ul>
+<li>postgresql-ident</li>
+</ul>
+<p>title: Postgresql Ident Authentication Failed</p>
+<hr>
+<p>System: GNU/Linux</p>
+<p>Distribution: Centos 7</p>
+<p>Process: Install redmine</p>
+<p>I had installing redmine. Redmine want access postgresql database. I applied this command :</p>
+<p>&rdquo;`</p>
+<p>RAILS_ENV=production bundle exec rake db:migrate</p>
+<p>&rdquo;`</p>
+<p>but it&rsquo;s give a error:</p>
+<p>&rdquo;`</p>
+<p>FATAL: Ident authentication failed for user &ldquo;<database-name>&rdquo;</p>
+<p>&rdquo;`</p>
+<p>I checked /var/lib/pgsql/11/data/pg_hba.conf, i corrected these lines:</p>
+<p>&rdquo;`</p>
+<h1>&ldquo;local&rdquo; is for Unix domain socket connections only</h1>
+<p>local   all             all                                     trust</p>
+<h1>IPv4 local connections:</h1>
+<p>host    all             all             127.0.0.<sup>1</sup>&frasl;<sub>32</sub>           	trust</p>
+<p>&rdquo;`</p>
+<p>but it give same error thereafter i search. I found some think, postgresql used ipv6 when work on localhost. I correct this line:</p>
+<p>&rdquo;`</p>
+<h1>IPv6 local connections:</h1>
+<p>host    all             all             ::<sup>1</sup>&frasl;<sub>128</sub>                 trust</p>
+<p>&rdquo;`</p>
+<p>and I took back last changes. Consequently it worked at this stage, so when postgresql works on localhost it used ipv6.</p>

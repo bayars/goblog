@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>postfix on Safa Bayar</title>
+    <link>https://safabayar.tech/tags/postfix/</link>
+    <description>Recent content in postfix on Safa Bayar</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://safabayar.tech/tags/postfix/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Postfix Virtual Host Eklemek</title>
+      <link>https://safabayar.tech/virtualhostpostfix/</link>
+      <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://safabayar.tech/virtualhostpostfix/</guid>
+      <description>Virtual Host Virtual host kavramı derste, virtual mail dizinine sahip olanlar, farklı domain adlarına sahip olanlar ve unix kullanıcısı olmayan durumu için anlatıldı. Ben de anladıklarımı ve notlarımı size aktarmaya çalışacağım.
+Büyük sistemlerde çok fazla kullanıcı bulunmaktadır ve her biri için domain adı girilmiş olmalıdır. Bundan dolayı çok fazla kaynak ve zaman gerekmektedir. Bu sorunun önüne geçmek için virtual host kavramı kullanılmaktadır.
+Virtual host kavramı ise postfix&amp;rsquo;te her alıcı adresi kendisine ait bir tane sanal mail kutusu(virtual mailbox) olmalıdır.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,213 @@
+<hr>
+<p>date: &ldquo;209-12-08&rdquo;</p>
+<p>draft: false</p>
+<p>lastmod: &ldquo;2019-12-08&rdquo;</p>
+<p>publishdate: &ldquo;2019-12-08&rdquo;</p>
+<p>tags:</p>
+<ul>
+<li>linux</li>
+</ul>
+<ul>
+<li>data-mining</li>
+</ul>
+<ul>
+<li>r-programming</li>
+</ul>
+<ul>
+<li>k-cluster-meaning</li>
+</ul>
+<p>title: Comparison of Wine Production by Country</p>
+<hr>
+<h1>Comparison of wine production by country</h1>
+<p><img src="Pictures/Rplot08.png" alt="Rplot8" title="Result" /></p>
+<p>I wrote some missing information on the comment line. Link to the script I wrote: <a href="https://gitlab.com/rection/notlar/blob/master/Wine%20Data%20Mining/SonScript.r">RSCRIPT</a></p>
+<p>The pdf file I prepared to present the homework: <a href="https://gitlab.com/rection/notlar/blob/master/Wine%20Data%20Mining/Wine%20Reviews.pdf">odt file</a></p>
+<h2>K Proximity Cluster (K ​​Means Clustering)</h2>
+<p>I will calculate the K proximity set. The data set I use is based on wine tastings in the world, and the wine scoring, which vineyard is harvested, which country it is processed in, the pricing and definition in the countries sold. The values ​​I want to examine are to examine in which country the wines are produced, wine scoring, wine pricing and what type of grapes are produced. As a result, the best wines that I expect to come out to find are where they are usually produced, to classify the wine prices and the wine quality in the k proximity set, the chart with the countries that are produced, graphics is on the representation.</p>
+<p>I got the dataset from kaggle.</p>
+<p><a href="https://www.kaggle.com/zynicide/wine-reviews">Link:</a></p>
+<p>I selected 150 thousand lines in the data set. Moving to the code stage;</p>
+<p>To change the working directory to default:</p>
+<p>&rdquo;`</p>
+<p>setwd ( &ldquo;/ media / pure / FAF09CCAF09C8F0F / Users / SAFA / downloads / Dataset&rdquo;)</p>
+<p>&rdquo;`</p>
+<p>To ensure that the data set is read:</p>
+<p>&rdquo;`</p>
+<p>noble &lt;- read.csv (&lsquo;winemag-data_first150k.csv&rsquo;)</p>
+<p>&rdquo;`</p>
+<p>To install the required packages:</p>
+<p>&rdquo;&ldquo;`</p>
+<p>install.packages ( &ldquo;If tidyv&rdquo;)</p>
+<p>install.packages ( &ldquo;cluster&rdquo;)</p>
+<p>install.packages ( &ldquo;factoextr A&rdquo;)</p>
+<p>install.packages ( &ldquo;ggthemes&rdquo;)</p>
+<p>&rdquo;&ldquo;`</p>
+<p>Since I have problems accessing some directories because I work on Linux, I installed the above packages as follows:</p>
+<p>&rdquo;&ldquo;&rdquo;&rdquo;</p>
+<p>install.packages (&ldquo;cluster&rdquo;, dependencies = TRUE, INSTALL_opts = c (&lsquo;- no-lock&rsquo;))</p>
+<p>install.packages (&ldquo;tidyverse&rdquo;, dependencies = TRUE, INSTALL_opts = c (&lsquo;- no-lock&rsquo;))</p>
+<p>install.packages (&ldquo;factoextra&rdquo;, dependencies = TRUE, INSTALL_opts = c (&lsquo;- no-lock&rsquo;))</p>
+<p>install.packages (&ldquo;ggthemes&rdquo;, dependencies = TRUE, INSTALL_opts = c (&lsquo;- no-lock&rsquo;))</p>
+<p>&rdquo;&ldquo;&rdquo;&rdquo;</p>
+<p>Then I removed the lines that I wouldn&rsquo;t review:</p>
+<p>&rdquo;&ldquo;&rdquo;`</p>
+<p>noble [1] &lt;- NULL</p>
+<p>noble [2] &lt;- NULL</p>
+<p>noble [2] &lt;- NULL</p>
+<p>noble [4] &lt;- NULL</p>
+<p>noble [5] &lt;- NULL</p>
+<p>noble [6] &lt;- NULL</p>
+<p>&rdquo;&ldquo;&rdquo;`</p>
+<p>I configured it as we wanted in the dataset. Now let&rsquo;s move on to how to do K means clustering.</p>
+<h2>K-means Clustering:</h2>
+<p>It allows dividing into given similar cluster observations. What I mean by cluster observations is used to classify the Data according to similar characteristics and to examine which classification it is in. The process should be repeated until the data outside of the similarity enters a certain cluster. If not, the results may not be accurate. One of the important factors is what the classification will be made according to. Classifications are found by taking the distance of a particular data set from other data. As we have seen in the lesson to find the distance, there is an algorithm for calculating too much affinity. Euclidean distance calculation technique is the most popular and useful.</p>
+<p>Clustering can be done with the kmeans () function located in the base repository of R. One of the major problems of K means clustering is the determination of the k value. The K value indicates how many clusters there will be. To determine this, an estimated value can be assigned, the value close to the average of the data column can be used, and random numbers can be found by trying.</p>
+<p>The parameters of the function are as follows:</p>
+<p>&rdquo;&ldquo;`</p>
+<p>kmeans (x, centers, iter.max = 10, nstart = 1)</p>
+<p>&rdquo;&ldquo;`</p>
+<p><strong>x:</strong> data frame can be matrix or vector.</p>
+<p><strong>centers:</strong> Cluster number value or initial cluster center values</p>
+<p><strong>iter.max:</strong> maximum number of iterations</p>
+<p><strong>nstart:</strong> Centers number is the random start set number. Must be greater than 1 or 1.</p>
+<p>The Kmeans function outputs the following:</p>
+<p><strong>cluster:</strong> An integer vector (1: k) observations determine the assignment sets</p>
+<p><strong>centers:</strong> Matrix of cluster centers (cluster averages)</p>
+<p><strong>totss:</strong> Total sum of squares (TSS) determines the total variation in the TSS database.</p>
+<p><strong>withinss:</strong> Sum of intra-cluster squares, one number for each cluster</p>
+<p><strong>tot.withinss:</strong> Total sum of intra-cluster squares</p>
+<p><strong>betweenss:</strong> sum of inter-cluster squares</p>
+<p><strong>size:</strong> Number of observations in each cluster</p>
+<p>In addition, &ldquo; set.seed () &rdquo; should be used. The reason is that when generating random numbers, the tests provide consistent results.</p>
+<p>&rdquo;&ldquo;`</p>
+<blockquote>
+<p>summary (noble)</p>
+</blockquote>
+<pre><code>  country points price
+</code></pre>
+<p>US: 62397 Min. : 80.00 Min. : 4.00</p>
+<p>Italy: 23478 1st Qu .: 86.00 1st Qu .: 16.00</p>
+<p>France: 21098 Median: 88.00 Median: 24.00</p>
+<p>Spain: 8268 Mean: 87.89 Mean: 33.13</p>
+<p>Chile: 5816 3rd Qu .: 90.00 3rd Qu .: 40.00</p>
+<p>Argentina: 5631 Max. : 100.00 Max. : 2300.00</p>
+<p>(Other): 24242 NA&rsquo;s: 13695</p>
+<pre><code>     region_1 variety
+</code></pre>
+<pre><code>                 : 25060 Chardonnay: 14482
+</code></pre>
+<p>Napa Valley: 6209 Pinot Noir: 14291</p>
+<p>Columbia Valley (WA): 4975 Cabernet Sauvignon: 12800</p>
+<p>Mendoza: 3586 Red Blend: 10062</p>
+<p>Russian River Valley: 3571 Bordeaux-style Red Blend: 7347</p>
+<p>California: 3462 Sauvignon Blanc: 6320</p>
+<p>(Other): 104067 (Other): 85628</p>
+<p>&rdquo;&ldquo;`</p>
+<p>As can be seen, there is a huge difference between values. For this we need to do normalization. As a result, we will be able to use the data more efficiently.</p>
+<p>&rdquo;&rdquo;</p>
+<blockquote>
+<p>df &lt;- na.omit (noble) # NA extracts data that is NULL or meaningless.</p>
+</blockquote>
+<blockquote>
+<p>df <span class="math inline">\( points &lt;- scale (df \)</span> points) # Scale standardization is done.</p>
+</blockquote>
+<blockquote>
+<p>df <span class="math inline">\( price &lt;- scale (df \)</span> price) # Separate because there is a string in the data set.</p>
+</blockquote>
+<p>&rdquo;&rdquo;</p>
+<p>I mentioned the determination of the number of clusters. It helps in identifying through a library that I found later.</p>
+<p>To activate the library:</p>
+<p>&rdquo;`</p>
+<p>library (factoextr A)</p>
+<p>&rdquo;`</p>
+<p>In order for the number to be assigned randomly to be stable:</p>
+<p>&rdquo;`</p>
+<p>set.seed (123)</p>
+<p>&rdquo;`</p>
+<p>It can be found with this function for normal situations.</p>
+<p>&rdquo;`</p>
+<p>fviz_nbclust (df, kmeans, method = ”wss”)</p>
+<p>&rdquo;`</p>
+<p>I encounter an error like this.</p>
+<p>&rdquo;`</p>
+<p>Error: cannot allocate vector of size 70.2 Gb</p>
+<p>&rdquo;`</p>
+<p>Therefore, shrinking the data set efficiently is one of the alternative ways. To do this, it is faster to select random values ​​from 137 thousand rows and to process the values ​​over them, and it also provides sufficient amount of RAM. It selects random lines and redefines it to a dataset called df1:</p>
+<p>&rdquo;&rdquo;</p>
+<p>df1 &lt;- df [sample (nrow (df), 20000),]</p>
+<p>&rdquo;&rdquo;</p>
+<p>20 thousand rows are randomly selected from the data set and assigned to the variable named df1. Then we can put it into fviz_nbcluse function. In order to select the numerical value from the lines of variable &lsquo;df1&rsquo;, lines 2 and 3 must be selected. The reason is the string of other lines. It took about 20 minutes to calculate.</p>
+<p>&rdquo;&rdquo;</p>
+<p>fviz_nbclust (df1 [, 2: 3], kmeans, method = &lsquo;wss&rsquo;)</p>
+<p>&rdquo;&rdquo;</p>
+<p>As a result:</p>
+<p><img src="Pictures/FirstCommand.png" alt="Picture" title="First Command" /></p>
+<p>The place where the k value is the most broken in the table is the most efficient value. For this, the value of k indicates that it will be an estimated 2 or 5. So we have to compare for k = 2 and k = 5.</p>
+<p>For the selection of random values ​​to be correct:</p>
+<p>&rdquo;`</p>
+<p>set.seed (123)</p>
+<p>&rdquo;`</p>
+<p>We used the kmeans function to calculate k proximity to the variable named km.res. The function specifies the data columns to be processed, the k value, and from which value the data set will start. Using the Kmeans function, it transmits the k proximity table and the content of the variable is suppressed.</p>
+<p>&rdquo;`</p>
+<p>km.res &lt;-kmeans (df2 [2: 3], 2, nstart = 25)</p>
+<p>&rdquo;`</p>
+<p>&rdquo;`</p>
+<p>print (km.res)</p>
+<p>&rdquo;`</p>
+<p>K affinity clustering classifies such as Principal Component Analysis (PCA). PCA is to give 4 variables and outputs as two new variables. Here, it gives the first data processed as output. It is like the use of plots.</p>
+<p>On the other hand, if there is a two-dimensional data set, a solution for this is PCA and the coordinates where the elements are collected by following the first 2 principles. It can also be evaluated in 2D in the data set that I use. Because just by looking at the relationship between scoring and price. The classification of wines is considered.</p>
+<p>Finally, I used the fviz_cluster function to convert the k = 2 value into a graph. The &lsquo;km_res&rsquo; value was the variable that kept the k proximity values ​​of the kmeans function.</p>
+<p>&rdquo;`</p>
+<p>fviz_cluster (km.res, data = df) + tma</p>
+<p>&rdquo;`</p>
+<p>In Conclusion:</p>
+<p><img src="Pictures/PriceandScoring.png" alt="Clustering-1" title="Clustering" /></p>
+<p>As seen in the graph, there is not much correct classification for k = 2 situation. It is a graphic that states that there are only two quality wines. We have to try K = 5 and decide which chart is more accurate.</p>
+<p>&rdquo;`</p>
+<p>km.res &lt;-kmeans (df2 [2: 3], 5, nstart = 25)</p>
+<p>fviz_cluster (km.res, data = df) + tma</p>
+<p>&rdquo;`</p>
+<p>As a result:</p>
+<p><img src="Pictures/clustering2.png" alt="Clustering2" title="clustering2" /></p>
+<p>It sets the marked data in the pricing and scoring category of wines and classifies both affordable and quality wines. The marked numbers indicate the line with the wine. If the class of clusters is:</p>
+<ul>
+<li><strong>Green zone:</strong> Low in price and low in quality.</li>
+</ul>
+<ul>
+<li><strong>Red zone:</strong> Prices are the same as low scores but higher in quality.</li>
+</ul>
+<ul>
+<li><strong>Blue zone:</strong> Quality and poor quality are mixed with increasing prices. Data for this class is not accurate. It should be checked and compared according to the index numbers.</li>
+</ul>
+<ul>
+<li><strong>Purple region:</strong> This is the class with prices and fine wines.</li>
+</ul>
+<p>What needs to be removed from the chart:</p>
+<ul>
+<li>High quality wines can be sold at cheap prices,</li>
+</ul>
+<ul>
+<li>The perception that cheap wines are of poor quality is actually wrong,</li>
+</ul>
+<ul>
+<li>The quality and price classification of wines turns out to be more successful in low quality wines.</li>
+</ul>
+<p>I used the information in the lines and assigned them to the arrays to show the countries producing the most in the world in the pie chart.</p>
+<p>&rdquo;&ldquo;&rdquo;</p>
+<p>t2 = c (&lsquo;US&rsquo;, &lsquo;Italy&rsquo;, &lsquo;France&rsquo;, &lsquo;Spain&rsquo;, &lsquo;Chile&rsquo;, &lsquo;Argentine&rsquo;, &lsquo;Other&rsquo;) # I put the country in the string.</p>
+<p>t3 = c (62139,18784,14785,8160,5766,5587,22014) # I took the value from 150 thousand values ​​and assigned it to the string.</p>
+<p>pct &lt;- round (t3 / sum (t3) * 100) # To get the percent values ​​to the pct variable, I divide the sum of each value by 100.</p>
+<p>lbls &lt;- paste (t2, pct) # I have matched the names of countries with the values ​​of pct.</p>
+<p>lbls &lt;- paste (lbls, &ldquo;%&rdquo;, sep = &ldquo;&rdquo;) # I have written a percent sign and no spaces in front of each value.</p>
+<p>pie (t3, labels = lbls, col = rainbow (length (lbls))),</p>
+<ul>
+<li>main = &ldquo;Wine production of countries&rdquo;) # I placed the country with the function of pie with the t3 numerical values ​​and the percentage expressions that I previously combined as naming. I used the parameter col for coloring. Refers to rainbow rainbow colors. As naming, I used the main parameter in the beginning of the chart.</li>
+</ul>
+<p>&rdquo;&ldquo;&rdquo;</p>
+<p>As can be seen from the chart, the country that produces the most in the world is America with 45%.</p>
+<p><img src="Pictures/WineProductionofCountries.png" alt="Wine Production" title="Wine Production" /></p>
+<p>As a last comparison, I have scored 150 thousand tasting grapes and compared them by country.</p>
+<p>&rdquo;&rdquo;</p>
+<p>qplot (data <span class="math inline">\( country, data \)</span> points, data = data, geom = c (&ldquo;boxplot&rdquo;, &ldquo;jitter&rdquo;), xlab = &ldquo;Countries&rdquo;, ylab = &ldquo;Wine Scoring&rdquo;, main = &ldquo;Wine scoring and countries of production&rdquo;) + theme (axis.title = element_text (face = &ldquo;bold&rdquo;, size = &ldquo;24&rdquo;, color = &ldquo;red&rdquo;), legend.position = &ldquo;top&rdquo;)</p>
+<p>&rdquo;&rdquo;</p>
+<p>To use the qplot function, you need to activate ggplot2. The code is already descriptive enough. Here R shows the skill of the programming language. It provides the data that a person cannot process throughout his life within 10 minutes without any errors.</p>
