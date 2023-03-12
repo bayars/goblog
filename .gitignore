@@ -15,5 +15,6 @@
 # vendor/
 
 templates/
+html/
 blog/
 markdown/

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io/fs"
 	"net/http"
@@ -12,6 +13,20 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
 )
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func trimPath(path string) string {
+	idx := strings.LastIndex(path, "/")
+	if idx != -1 {
+		path = path[:idx]
+	}
+	return path
+}
 
 func templateMarkdowntoHTML(FileLocations string) {
 	mdFile, ok := os.Open(FileLocations)
@@ -25,10 +40,25 @@ func templateMarkdowntoHTML(FileLocations string) {
 		text = append(text, scanner.Text())
 	}
 	mdFile.Close()
-	FileLocations = strings.Replace(FileLocations, "markdown", "./templates/html", 1)
+	if _, err := os.Stat("./html"); errors.Is(err, os.ErrNotExist) {
+		panic("html directory is not exists")
+	}
+	FileLocations = strings.Replace(FileLocations, "markdown", "./html", 1)
 	fmt.Println(FileLocations)
 	htmlFileName := FileLocations[:len(FileLocations)-2] + "html"
 	// os.MkdirAll(folderPath, os.ModePerm)
+	// fmt.Println(trimPath(htmlFileName))
+	os.MkdirAll(trimPath(htmlFileName), 0700)
+	// createEmptyFile := func(name string) {
+	// 	d := []byte("")
+	// 	check(os.WriteFile(name, d, 0644))
+	// }
+	// createEmptyFile(htmlFileName)
+
+	// if _, err := os.Stat(htmlFileName); errors.Is(err, os.ErrNotExist) {
+	// panic("html directory is not exists")
+	// createEmptyFile(htmlFileName)
+	// }
 	htmlFile, ok := os.Create(htmlFileName)
 	if ok != nil {
 		panic(ok)
@@ -65,12 +95,25 @@ func main() {
 
 	r := gin.Default()
 	// r.LoadHTMLGlob("./templates/html/*.html")
-	r.LoadHTMLGlob("/home/safa/works/go/goblog/templates/html/post/wine-data-mining/Turkish/*.html")
+	// r.LoadHTMLGlob("/home/safa/works/go/goblog/templates/html/post/wine-data-mining/Turkish/*.html")
+	r.LoadHTMLGlob("/home/safa/works/go/goblog/html/**/*")
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "README.html", nil)
+		c.HTML(http.StatusOK, "index.html", nil)
 	})
-	r.GET("/about", func(c *gin.Context) {
+	r.GET("/aboutme", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "about.html", nil)
+	})
+	r.GET("/findprune", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "post/find-prune.html", nil)
+	})
+	r.GET("/postgresql-localhost", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "post/Postgresql-Localhost.html", nil)
+	})
+	r.GET("/replacement-algorithm", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "post/Replacement-Algorithm.html", nil)
+	})
+	r.GET("/virtualhost-postfix", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "post/virtualhostpostfix.html", nil)
 	})
 	r.Run(":3000")
 
