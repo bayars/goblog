@@ -51,7 +51,9 @@ function NavigateBar() {
 }
 
 function Footer() {
-  return(    
+  return(
+    <div className="main-page">
+      <div className="div">
     <div className="overlap-group-wrapper">
       <div className="overlap-group">
         <div className="text-wrapper-4">© 2024 Safa Bayar</div>
@@ -64,6 +66,8 @@ function Footer() {
         </div>
       </div>
     </div>
+  </div>
+</div>
   );
 }
 
