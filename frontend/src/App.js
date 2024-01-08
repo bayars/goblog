@@ -35,7 +35,7 @@ function NavigateBar() {
                 <Link to="/articles">Blogs</Link>
               </div>
               <a className="text-wrapper" href="https://github.com" rel="noopener noreferrer" target="_blank">
-                PROJECTS
+                Projects
               </a>
               <div className="text-wrapper-2">
                 <Link to="/resume">Resume</Link>
@@ -54,18 +54,18 @@ function Footer() {
   return(
     <div className="main-page">
       <div className="div">
-    <div className="overlap-group-wrapper">
-      <div className="overlap-group">
-        <div className="text-wrapper-4">© 2024 Safa Bayar</div>
-        <div className="group-2">
-          <div className="text-wrapper-5">LinkedIn</div>
-          <div className="text-wrapper-6">LinkedIn</div>
-          <div className="text-wrapper-7">LinkedIn</div>
-          <div className="text-wrapper-8">LinkedIn</div>
-          <div className="text-wrapper-9">LinkedIn</div>
+        <div className="overlap-group-wrapper">
+          <div className="overlap-group">
+            <div className="text-wrapper-4">© 2024 Safa Bayar</div>
+              <div className="group-2">
+                <div className="text-wrapper-5">LinkedIn</div>
+                <div className="text-wrapper-6">LinkedIn</div>
+                <div className="text-wrapper-7">LinkedIn</div>
+                <div className="text-wrapper-8">LinkedIn</div>
+                <div className="text-wrapper-9">LinkedIn</div>
+              </div>
+          </div>
         </div>
-      </div>
-    </div>
   </div>
 </div>
   );
