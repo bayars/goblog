@@ -1,7 +1,10 @@
 import React from "react";
 import "./css/style.css";
 import MainPage from "./pages/MainPage";
-import ArticlePage from "./pages/Articles";
+import ArticlePage from "./pages/ArticlePage";
+import Links from "./pages/Links";
+import BlogPage from "./pages/BlogPage";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -15,9 +18,10 @@ function App() {
       <NavigateBar />
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/articles" element={<ArticlePage />} />
+          <Route path="/article/:articleId" element={<ArticlePage />} />
+          <Route path="/articles" element={<BlogPage />} />
+          <Route path="/links" element={<Links />} />
         </Routes>
-      <Footer />
     </Router>
   );
 }
@@ -50,26 +54,20 @@ function NavigateBar() {
   );
 }
 
-function Footer() {
-  return(
-    <div className="main-page">
-      <div className="div">
-        <div className="overlap-group-wrapper">
-          <div className="overlap-group">
-            <div className="text-wrapper-4">© 2024 Safa Bayar</div>
-              <div className="group-2">
-                <div className="text-wrapper-5">LinkedIn</div>
-                <div className="text-wrapper-6">LinkedIn</div>
-                <div className="text-wrapper-7">LinkedIn</div>
-                <div className="text-wrapper-8">LinkedIn</div>
-                <div className="text-wrapper-9">LinkedIn</div>
-              </div>
-          </div>
-        </div>
-  </div>
-</div>
-  );
-}
+// function Footer() {
+//   return(
+//     <div className="bottom-navbar">
+//               <div className="group-2">
+//                 <div className="text-wrapper-5">LinkedIn</div>
+//                 <div className="text-wrapper-6">LinkedIn</div>
+//                 <div className="text-wrapper-7">LinkedIn</div>
+//                 <div className="text-wrapper-8">LinkedIn</div>
+//                 <div className="text-wrapper-9">LinkedIn</div>
+//               </div>
+//               <div className="text-wrapper-4">© 2024 Safa Bayar</div>
+//     </div>
+//   );
+// }
 
 export default App;
 
