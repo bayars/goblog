@@ -1,39 +1,63 @@
 package main
 
 import (
+	"fmt"
+	"goblog/models"
+	"goblog/pg_connect"
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	loadEnv()
+	loadDatabase()
+
 	router := gin.Default()
 
-	router.GET("/blog/", func(c *gin.Context) {
-		name := c.Param("index")
-		c.String(http.StatusOK, "Hello %s", name)
+	router.GET("/articles", func(c *gin.Context) {
+		articles, err := pg_connect.GetAllData()
+		if err != nil {
+			c.String(http.StatusNotFound, "Article not found")
+			return
+		}
+		c.JSON(200, articles)
 	})
 
-	router.GET("/blog/:index", func(c *gin.Context) {
-		name := c.Param("index")
-		c.String(http.StatusOK, "Hello %s", name)
-	})
+	router.GET("/articles/:index", func(c *gin.Context) {
+		indexNo := c.Param("index")
 
-	router.GET("/user/:name/*action", func(c *gin.Context) {
-		name := c.Param("name")
-		action := c.Param("action")
-		message := name + " is " + action
-		c.String(http.StatusOK, message)
-	})
+		uIntValue, err := strconv.ParseUint(indexNo, 10, 64)
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
 
-	router.POST("/user/:name/*action", func(c *gin.Context) {
-		b := c.FullPath() == "/user/:name/*action" // true
-		c.String(http.StatusOK, "%t", b)
-	})
+		var indexNoConv uint = uint(uIntValue)
 
-	router.GET("/user/groups", func(c *gin.Context) {
-		c.String(http.StatusOK, "The available groups are [...]")
+		data, err := pg_connect.GetData(indexNoConv)
+		if err != nil {
+			c.String(http.StatusNotFound, "Article not found")
+			return
+		}
+		c.JSON(200, data)
 	})
 
 	router.Run(":8080")
+
+}
+
+func loadDatabase() {
+	pg_connect.Connect()
+	pg_connect.Database.AutoMigrate(&models.Article{})
+}
+
+func loadEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 }

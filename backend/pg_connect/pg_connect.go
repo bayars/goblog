@@ -43,4 +43,13 @@ func GetData(index uint) (*models.Article, error) {
 	return &article, nil
 }
 
-// Get data function should search database with gorm and get the article with data index number
+func GetAllData() (*[]models.Article, error) {
+	var articles []models.Article
+
+	result := Database.Find(&articles)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return &articles, nil
+}
