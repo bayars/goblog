@@ -53,3 +53,11 @@ func GetAllData() (*[]models.Article, error) {
 
 	return &articles, nil
 }
+
+func InsertData(article *models.Article) error {
+	result := Database.Create(&article)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"goblog/models"
 	"goblog/pg_connect"
+	"goblog/templater"
 	"log"
 	"net/http"
 	"strconv"
@@ -55,9 +56,14 @@ func main() {
 
 }
 
+func loadExistingData() {
+	templater.Run()
+}
+
 func loadDatabase() {
 	pg_connect.Connect()
 	pg_connect.Database.AutoMigrate(&models.Article{})
+	loadExistingData()
 }
 
 func loadEnv() {
