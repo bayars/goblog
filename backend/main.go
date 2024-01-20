@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -17,6 +18,10 @@ func main() {
 	loadDatabase()
 
 	router := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*"} // Update this with the actual origin(s) of your frontend
+	router.Use(cors.New(config))
 
 	router.GET("/articles", func(c *gin.Context) {
 		articles, err := pg_connect.GetAllData()

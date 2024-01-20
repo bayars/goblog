@@ -1,41 +1,64 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
 function BlogPage() {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch('http://10.20.30.46:8080/articles');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data = await response.json();
+        setArticles(data);
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
   return (
     <div className="blog-page">
-        <span className="span-2">BLOG</span>
-        <span className="span-3">
-            <div className="div-8">
-            27
-            <br />
-            MAY
-            <br />
-            </div>
-            <span className="span-4">
+      <span className="span-2">BLOG</span>
+      {loading ? (
+        <p>Loading...</p>
+      ) : articles.length > 0 ? (
+        <>
+
+        {articles.map((article, index) => (
+          <span key={article.id || index} className="span-3">
+          <div className="div-8">{article.timestamp.slice(0,10)}</div>
+          <span className="span-4">
             <div className="div-9">
-                15 Disadvantages Of Freedom And How You Can Workaround It.
+              {article.title}
             </div>
             <div className="div-10">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum{" "}
-                {/* <span style="font-weight: 200; color: rgba(59,64,187,1);">
-                ...read more
-                </span> */}
+              {article.content}
             </div>
             <span className="span-5">#tag</span>
-            </span>
-        </span>
+          </span>
+          <br />
+          </span>
+
+      ))}
+        </>
+
+      ) : (
+        <p>No articles found</p>
+      )}
     </div>
   );
 }
 
 export default BlogPage;
-
 
 
 

@@ -13,12 +13,13 @@ import {
 } from "react-router-dom";
 
 function App() {
+
   return (
     <Router>
       <NavigateBar />
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/article/:articleId" element={<ArticlePage />} />
+          <Route path="/articles/:articleId" element={<ArticlePage />} />
           <Route path="/articles" element={<BlogPage />} />
           <Route path="/links" element={<Links />} />
         </Routes>

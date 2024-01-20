@@ -767,7 +767,7 @@
 }
 .blog-page .span-3 {
   border-radius: 50px;
-  align-self: center;
+  /* align-self: center; */
   display: flex;
   margin-top: 79px;
   justify-content: center;
