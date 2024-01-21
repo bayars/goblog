@@ -38,7 +38,7 @@ func templateMarkdowntoHTML(FileLocations string) {
 		text = append(text, scanner.Text())
 	}
 	mdFile.Close()
-	if _, err := os.Stat("./html"); errors.Is(err, os.ErrNotExist) {
+	if _, err := os.Stat("../static/html"); errors.Is(err, os.ErrNotExist) {
 		panic("html directory is not exists")
 	}
 	FileLocations = strings.Replace(FileLocations, "markdown", "./html", 1)
@@ -86,8 +86,8 @@ func find(content, ext string) []string {
 	return a
 }
 
-func Run() {
-	for _, s := range find("./markdown", ".md") {
+func Run(MarkdownDirPath string) {
+	for _, s := range find(MarkdownDirPath, ".md") {
 		templateMarkdowntoHTML(s)
 	}
 
